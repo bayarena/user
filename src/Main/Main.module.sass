@@ -53,23 +53,17 @@
 
 
 
-.recentClass
+.ItemGroup
   display: flex
   justify-content: space-between
 
+.SmallClassItem
 
-  > div
-    max-width: 23%
-    text-align: center
+  max-width: 23%
+  text-align: center
 
-    > img 
-      width: 100%
-
-
-.classItem
   > p
     margin: 2px
-
 
   > p:nth-of-type(1)
     font-size: 13px
@@ -80,11 +74,36 @@
     font-size: 12px
     font-weight: bold
 
+  > img
+    width: 100%
+    border-radius: 10px
+
+.SmallMotivatorItem
+  width: 23%
+  height: 150px
+  border-radius: 10px
+  position: relative
+
+  background-repeat: no-repeat
+  background-position: center center
+  background-size: cover
+
+  > p
+    position: absolute
+    bottom: 0
+    margin: 0
+    padding: 5px 10px
+    margin: 5px
+    display: inline-block
+    background-color: #606060
+    border-radius: 10px
+    font-weight: bold
+    color: white
+    font-size: 10px
 
 .largeMenu
   display: flex
   justify-content: space-between
-
 
   > *
     width: 45%

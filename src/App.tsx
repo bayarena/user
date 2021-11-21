@@ -19,7 +19,6 @@ function App() {
   }
 
   const renderSwitch = (page:string) => {
-    console.log(page);
     switch(page){
       case 'LIVE' :
         return  <Live />

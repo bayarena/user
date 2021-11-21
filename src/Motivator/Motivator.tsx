@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './Motivator.module.css';
+import styles from './Motivator.module.sass';
 
 import { AppContext } from '../app-context';
 

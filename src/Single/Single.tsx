@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './Single.module.css';
+import styles from './Single.module.sass';
 
 import { AppContext } from '../app-context';
 

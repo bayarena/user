@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './Live.module.css';
+import styles from './Live.module.sass';
 
 import calendar from './calendar.png';
 import setting from './setting.png';

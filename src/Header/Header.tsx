@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import styles from './Header.module.css';
+import styles from './Header.module.sass';
 
 import logo from './logo.png';
 import calendar from './calendar.png';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './Category.module.css';
+import styles from './Category.module.sass';
 
 import { AppContext } from '../app-context';
 

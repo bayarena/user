@@ -10,10 +10,34 @@ import { SETTINGS } from '../settings';
 import { AppContext } from '../app-context';
 
 function Item(props:any){
+
+  const prettyTimeString = (date:string) => {
+    date = date.replace('Z', '');
+    
+    let time = date.split('T')[1];
+    let time_split = time.split(':');
+
+    let time_hour = Number(time_split[0]);
+
+    if(time_hour > 21){
+      time_split[0] = "PM " + (time_hour - 12);
+    }else if(time_hour > 12){
+      time_split[0] = "PM 0" + (time_hour - 12);
+    }else if(time_hour > 11){
+      time_split[0] = "PM 12";
+    }else{
+      time_split[0] = "AM " + time_split[0];
+    }
+
+    let new_time_str = time_split[0] + ':' + time_split[1];
+
+    return new_time_str;
+  };
+
   return(
     <div className={styles.item}>
       <div className={styles.timeline}>
-        <span>{props.time}</span>
+        <span>{prettyTimeString(props.time)}</span>
         <span></span>
       </div>
       <img className={styles.itemThumb} src={props.image} alt="" />
@@ -44,17 +68,13 @@ function Spacer(props:any){
 
 function Live() {
 
-  const [lectureList, setLectureList] = useState([]);
+  const [lectureList, setLectureList] = useState<any[]>([]);
 
   const refreshData = () => {
    axios.get(SETTINGS.REST_URL + '/lectures/')
     .then((res) => {
       if(res.status === 200){
-        let lectureList = res.data.results.reduce((acc:any, curr:any, idx:number)=>{
-          let lec = curr;
-          acc.push(lec);
-          return acc;
-        }, []);
+        let lectureList = res.data.results;
 
         console.log(lectureList);
         setLectureList(lectureList);
@@ -65,6 +85,22 @@ function Live() {
   useEffect(() => {
     refreshData();
   }, []);
+
+  const prettyDateString = (date:string) => {
+    let date_string = date.split('T')[0];
+    let date_split = date_string.split('-');
+    return date_split[0] + '년 ' + date_split[1] + '월 ' + date_split[2] + '일';
+  };
+
+  const getDateText = (n:number) => {
+    let date_string = prettyDateString(lectureList[n].date);
+    if(n === 0) return date_string;
+    else{
+      let prev_date_string = prettyDateString(lectureList[n-1].date);
+      if(prev_date_string !== date_string) return date_string;
+    }
+    return '';
+  };
 
   return (
     <div className={styles.root}>
@@ -79,21 +115,21 @@ function Live() {
       </AppContext.Consumer>
 
       <div className={styles.right}>
-        <Spacer />
         {lectureList.map((d:any, i:number) => {
           return(
-            <React.Fragment>
+            <React.Fragment key={i}>
+              <Spacer text={getDateText(i)} />
               <Item
-                key={i}
                 title={d.title}
                 subtitle={d.subtitle}
                 image={d.image}
                 motivators={d.thumbs}
+                time={d.date}
               /> 
-              <Spacer />
             </React.Fragment>
           );
         })}
+        <Spacer />
       </div>
     </div>
   );

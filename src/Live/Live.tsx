@@ -102,6 +102,16 @@ function Live() {
     return '';
   };
 
+  const getSubTitle = (d:any) => {
+    let diff = "초급";
+    switch(d.difficulty){
+      case 1 : diff = "중급"; break;
+      case 2 : diff = "고급"; break;
+    }
+
+    return diff + " | " + d.time + "min | " + d.theme;
+  }
+
   return (
     <div className={styles.root}>
       <AppContext.Consumer>
@@ -121,7 +131,7 @@ function Live() {
               <Spacer text={getDateText(i)} />
               <Item
                 title={d.title}
-                subtitle={d.subtitle}
+                subtitle={getSubTitle(d)}
                 image={d.image}
                 motivators={d.thumbs}
                 time={d.date}

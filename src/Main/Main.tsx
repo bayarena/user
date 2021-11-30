@@ -17,13 +17,24 @@ import axios from 'axios';
 SwiperCore.use([ Autoplay ]);
 
 function ClassItem(props:any){
+
+  const getSubTitle = () => {
+    let diff = "초급";
+    switch(props.difficulty){
+      case 1 : diff = "중급"; break;
+      case 2 : diff = "고급"; break;
+    }
+
+    return diff + " | " + props.time + "min | " + props.theme;
+  }
+
   return(
     <div
       className={styles.SmallClassItem}
       onClick={()=>props.onClick()}>
       <img alt="" src={props.image} />
       <p>{props.title}</p>
-      <p>{props.subtitle}</p>
+      <p>{getSubTitle()}</p>
     </div>
   );
 }

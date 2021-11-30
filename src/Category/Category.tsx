@@ -1,17 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import styles from './Category.module.sass';
 
 import { AppContext } from '../app-context';
 
+import { SETTINGS } from '../settings';
+
 function Item(props:any){
   return(
     <div className={styles.item}>
-      <p className={styles.itemText}>{props.name}</p>
+      <img src={props.src} alt="" />
+      <p>{props.name}</p>
     </div>
   )
 }
 
 function Category() {
+
+  const [categoryList, setCategoryList] = useState([]);
+
+  useEffect(()=>{
+    axios.get(SETTINGS.REST_URL + "/category/")
+      .then((res)=> {
+        if(res.status === 200){
+
+          let catList = res.data.results.reduce((acc:any, curr:any, idx:number)=>{
+            let cat = {
+              id: curr.id,
+              title: curr.title,
+              thumb: curr.thumb
+            };
+            acc.push(cat);
+            return acc;
+          }, []);
+
+          setCategoryList(catList);
+
+        }
+    });
+  }, []);
+
   return (
     <div className={styles.root}>
       <AppContext.Consumer>
@@ -25,12 +53,9 @@ function Category() {
       </AppContext.Consumer>
 
       <div className={styles.right}>
-        <Item name="사이클링" />
-        <Item name="맨몸운동" />
-        <Item name="요가" />
-        <Item name="필라테스" />
-        <Item name="명상" />
-        <Item name="덤벨운동"/>
+      {categoryList.map((d:any, i:number) => {
+        return <Item name={d.title} src={d.thumb} />
+      })}
       </div>
     </div>
   );

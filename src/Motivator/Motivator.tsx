@@ -6,18 +6,31 @@ import { AppContext } from '../app-context';
 
 import { SETTINGS } from '../settings';
 
+import Detail from './Detail';
+
 function Item(props:any){
   return(
-    <div className={styles.item}>
+    <div className={styles.item} onClick={()=>props.onClick()}>
       <img src={props.src} alt="" />
       <p className={styles.itemText}>{props.name}</p>
     </div>
   )
 }
 
+function Main(props:any){
+    return(
+      <div>
+        {props.list.map((d:any, i:number) => {
+          return <Item key={i} name={d.name_eng} src={d.image} onClick={()=>props.onClick(d.id)} />
+        })}
+      </div>
+    );
+}
+
 function Motivator() {
 
   const [motivatorList, setMotivatorList] = useState([]);
+  const [page, setPage] = useState(-1);
 
   useEffect(()=>{
     axios.get(SETTINGS.REST_URL + "/motivators/")
@@ -41,6 +54,13 @@ function Motivator() {
     });
   }, []);
 
+  const setContent = (n:number) => {
+    switch(n){
+      case -1 : return <Main list={motivatorList} onClick={(n:number) => setPage(n)}/>
+      default : return <Detail motivator={n} />
+    }
+  }
+
   return (
     <div className={styles.root}>
       <AppContext.Consumer>
@@ -48,15 +68,16 @@ function Motivator() {
         <div className={styles.left}>
           <span
             className={styles.leftArrow}
-            onClick={()=>changePage('MAIN')}></span>
+            onClick={()=>{
+              if(page === -1) changePage('MAIN');
+              else setPage(-1);
+            }}></span>
         </div>
       )}
       </AppContext.Consumer>
 
       <div className={styles.right}>
-        {motivatorList.map((d:any, i:number) => {
-          return <Item key={i} name={d.name_eng} src={d.image} />
-        })}
+        {setContent(page)}
       </div>
     </div>
   );

@@ -6,18 +6,31 @@ import { AppContext } from '../app-context';
 
 import { SETTINGS } from '../settings';
 
+import Detail from './Detail';
+
 function Item(props:any){
   return(
-    <div className={styles.item}>
+    <div className={styles.item} onClick={()=>props.onClick()}>
       <img src={props.src} alt="" />
       <p>{props.name}</p>
     </div>
   )
 }
 
+function Main(props:any){
+    return(
+      <div>
+        {props.list.map((d:any, i:number) => {
+          return <Item key={i} name={d.title} src={d.thumb} onClick={()=>props.onClick(d.id)} />
+        })}
+      </div>
+    );
+}
+
 function Category() {
 
   const [categoryList, setCategoryList] = useState([]);
+  const [page, setPage] = useState(-1);
 
   useEffect(()=>{
     axios.get(SETTINGS.REST_URL + "/category/")
@@ -40,6 +53,13 @@ function Category() {
     });
   }, []);
 
+  const setContent = (n:number) => {
+    switch(n){
+      case -1 : return <Main list={categoryList} onClick={(n:number) => setPage(n)}/>
+      default : return <Detail category={n} />
+    }
+  }  
+
   return (
     <div className={styles.root}>
       <AppContext.Consumer>
@@ -47,15 +67,16 @@ function Category() {
         <div className={styles.left}>
           <span
             className={styles.leftArrow}
-            onClick={()=>changePage('MAIN')}></span>
+            onClick={()=>{
+              if(page === -1) changePage('MAIN');
+              else setPage(-1);
+            }}></span>
         </div>
       )}
       </AppContext.Consumer>
 
       <div className={styles.right}>
-      {categoryList.map((d:any, i:number) => {
-        return <Item name={d.title} src={d.thumb} />
-      })}
+      {setContent(page)}
       </div>
     </div>
   );

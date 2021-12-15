@@ -16,6 +16,23 @@ import axios from 'axios';
 
 SwiperCore.use([ Autoplay ]);
 
+function TitleItem(props:any){
+  return(
+    <div
+      onClick={()=>props.onClick()}
+      className={styles.TitleItem}
+      style={{
+        height: props.height + "px",
+        lineHeight: props.height + "px",
+        background: "url('" + props.image + "')",
+        backgroundSize: "cover"}}>
+        <div>
+          <p>{props.title}</p>
+        </div>
+    </div>
+  );
+}
+
 function ClassItem(props:any){
 
   const getDiff = () => {
@@ -152,6 +169,15 @@ function Main() {
             <Swiper
               spaceBetween={0}
               slidesPerView={4}>
+
+              <SwiperSlide>
+                <TitleItem
+                  title="최근 클래스"
+                  onClick={()=>changePage('LIVE')}
+                  image="https://d.newsweek.com/en/full/1890945/exercise.jpg"
+                  height={240} />
+              </SwiperSlide>
+
               {recentClasses.map((d:any, i:number) => {
                 return(<SwiperSlide>
                         <ClassItem key={i} onClick={()=>changePage('LIVE')} {...d} />
@@ -164,6 +190,15 @@ function Main() {
             <Swiper
               spaceBetween={0}
               slidesPerView={4}>
+
+              <SwiperSlide>
+                <TitleItem
+                  title="함께 운동해요"
+                  onClick={()=>changePage('MOTIVATOR')}
+                  image="https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/News/4773-execise_class-1296x728-header.jpg?w=1155&h=1528"
+                  height={150} />
+              </SwiperSlide>
+
               {motivatorList.slice(0,4).map((d:any, i:number) => {
                 return(<SwiperSlide>
                   <MotivatorItem key={i} onClick={()=>changePage('MOTIVATOR')} {...d} />

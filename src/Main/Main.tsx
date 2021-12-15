@@ -149,21 +149,27 @@ function Main() {
           </div>
 
           <div>
-            <h3 className={styles.title}>최근 클래스</h3>
-            <div className={styles.ItemGroup}>
-            {recentClasses.map((d:any, i:number) => {
-              return <ClassItem key={i} onClick={()=>changePage('LIVE')} {...d} />;
-            })}
-            </div>
+            <Swiper
+              spaceBetween={0}
+              slidesPerView={4}>
+              {recentClasses.map((d:any, i:number) => {
+                return(<SwiperSlide>
+                        <ClassItem key={i} onClick={()=>changePage('LIVE')} {...d} />
+                       </SwiperSlide>)
+              })}
+            </Swiper>
           </div>
 
           <div>
-            <h3 className={styles.title}>우리 함께 운동해요</h3>
-            <div className={styles.ItemGroup}>
-            {motivatorList.slice(0,4).map((d:any, i:number) => {
-              return <MotivatorItem key={i} onClick={()=>changePage('MOTIVATOR')} {...d} />;
-            })}
-            </div>
+            <Swiper
+              spaceBetween={0}
+              slidesPerView={4}>
+              {motivatorList.slice(0,4).map((d:any, i:number) => {
+                return(<SwiperSlide>
+                  <MotivatorItem key={i} onClick={()=>changePage('MOTIVATOR')} {...d} />
+                       </SwiperSlide>)
+              })}
+            </Swiper>
           </div>
 
           <div className={styles.largeMenu}>

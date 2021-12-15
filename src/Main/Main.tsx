@@ -18,23 +18,37 @@ SwiperCore.use([ Autoplay ]);
 
 function ClassItem(props:any){
 
-  const getSubTitle = () => {
-    let diff = "초급";
+  const getDiff = () => {
     switch(props.difficulty){
-      case 1 : diff = "중급"; break;
-      case 2 : diff = "고급"; break;
+      case 1 : return "중급"
+      case 2 : return "상급"
+      default : return "초급"
     }
+  }
 
-    return diff + " | " + props.time + "min | " + props.theme;
+  const getDiffColor = () => {
+    switch(props.difficulty){
+      case 1 : return "#2196f3";
+      case 2 : return "#e91e63";
+      default : return "#8bc34a";
+    }
   }
 
   return(
     <div
+      style={{
+        background: "url('" + props.image + "')",
+        backgroundSize: "cover"
+      }}
       className={styles.SmallClassItem}
       onClick={()=>props.onClick()}>
-      <img alt="" src={props.image} />
-      <p>{props.title}</p>
-      <p>{getSubTitle()}</p>
+      <div>
+        <p style={{background: getDiffColor()}}>{getDiff()}</p>
+        <div>
+          <img src={SETTINGS.REST_URL + props.thumbs[0]} alt="" />
+          <p>{props.title}</p>
+        </div>
+      </div>
     </div>
   );
 }

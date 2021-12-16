@@ -34,9 +34,16 @@ function Item(props:any){
     return new_time_str;
   };
 
+  const prettyDateString = (date:string) => {
+    let date_string = date.split('T')[0];
+    let date_split = date_string.split('-');
+    return date_split[0] + '/' + date_split[1] + '/' + date_split[2];
+  };
+
   return(
     <div className={styles.item}>
       <div className={styles.timeline}>
+        <span>{prettyDateString(props.time)}</span>
         <span>{prettyTimeString(props.time)}</span>
         <span></span>
       </div>

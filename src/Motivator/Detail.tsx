@@ -5,6 +5,8 @@ import styles from './Detail.module.sass';
 import { SETTINGS } from '../settings';
 import type { T_motivator, T_lecture } from '../settings';
 
+import { useParams } from "react-router-dom";
+
 const emptyData:T_motivator = {
   id: 0,
   
@@ -67,18 +69,19 @@ function Item(props:any){
 	);
 }
 
-function Detail(props:any) {
+function Detail() {
 
 	const [motivator, setMotivator] = useState(emptyData);
+	let params = useParams();
 
 	useEffect(()=>{
-		axios.get(SETTINGS.REST_URL + "/motivators/" + props.motivator + "/")
+		axios.get(SETTINGS.REST_URL + "/motivators/" + params.id + "/")
 		  .then((res)=> {
 		  	if(res.status === 200){
 		  		setMotivator(res.data);
 			}
 		});		
-	}, []);
+	}, [params.id]);
 
 	return(
 		<div>

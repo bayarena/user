@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Single.module.sass';
 
-import { AppContext } from '../app-context';
+import { Link } from "react-router-dom";
 
 function Item(props:any){
   return(
@@ -16,15 +16,11 @@ function Item(props:any){
 function Single() {
   return (
     <div className={styles.root}>
-      <AppContext.Consumer>
-      {({changePage}) => (
-        <div className={styles.left}>
-          <span
-            className={styles.leftArrow}
-            onClick={()=>changePage('MAIN')}></span>
-        </div>
-      )}
-      </AppContext.Consumer>
+      <div className={styles.left}>
+        <Link to="/">
+          <span className={styles.leftArrow}></span>
+        </Link>
+      </div>
 
       <div className={styles.right}>
         <Item name="실외 라이딩" />

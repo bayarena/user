@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './Live.module.sass';
 
+import { Link } from "react-router-dom";
+
 import calendar from './calendar.png';
 import setting from './setting.png';
 
 import { SETTINGS } from '../settings';
-
-import { AppContext } from '../app-context';
 
 function Item(props:any){
 
@@ -114,15 +114,11 @@ function Live() {
 
   return (
     <div className={styles.root}>
-      <AppContext.Consumer>
-      {({changePage}) => (
-        <div className={styles.left}>
-          <span
-            className={styles.leftArrow}
-            onClick={()=>changePage('MAIN')}></span>
-        </div>
-      )}
-      </AppContext.Consumer>
+      <div className={styles.left}>
+        <Link to="/">
+          <span className={styles.leftArrow}></span>
+        </Link>
+      </div>
 
       <div className={styles.right}>
         {lectureList.map((d:any, i:number) => {

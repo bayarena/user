@@ -4,6 +4,8 @@ import axios from 'axios';
 import { SETTINGS } from '../settings';
 import type { T_lecture } from '../settings';
 
+import { useParams } from "react-router-dom";
+
 const emptyData:T_lecture = {
   id: 0,
 
@@ -24,16 +26,17 @@ const emptyData:T_lecture = {
 function Detail(props:any) {
 
 	const [category, setCategory] = useState(emptyData);
+	let params = useParams();
 
 	useEffect(()=>{
-		axios.get(SETTINGS.REST_URL + "/category/" + props.category + "/")
+		axios.get(SETTINGS.REST_URL + "/category/" + params.id + "/")
 		  .then((res)=> {
 		  	if(res.status === 200){
 		  		setCategory(res.data);
 		  		console.log(res.data);
 			}
 		});		
-	}, []);
+	}, [params.id]);
 
 	return(
 		<div>{props.category}</div>

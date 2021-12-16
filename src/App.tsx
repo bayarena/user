@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
+
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
 
 import Header from './Header/Header';
 import Main from './Main/Main';
@@ -8,39 +14,23 @@ import Motivator from './Motivator/Motivator';
 import Category from './Category/Category';
 import Single from './Single/Single';
 
-import { AppContext } from './app-context';
 
 function App() {
 
-  const [page, setPage] = useState('MAIN');
-
-  const changePage = (page:string) => {
-    setPage(page);
-  }
-
-  const renderSwitch = (page:string) => {
-    switch(page){
-      case 'LIVE' :
-        return  <Live />
-      case 'MOTIVATOR' :
-        return <Motivator />
-      case 'CATEGORY' :
-        return <Category />
-      case 'SINGLE' :
-        return <Single />
-      default :
-        return <Main />
-    }
-  }
-
   return (
     <div className="App">
-      <AppContext.Provider value={{changePage: changePage}}>
+      <BrowserRouter>
         <Header />
         <div className="Content">
-          {renderSwitch(page)}
+            <Routes>
+              <Route path="/" element={<Main />} />
+              <Route path="/LiveToday" element={<Live />} />
+              <Route path="/motivator/*" element={<Motivator />} />
+              <Route path="/category/*" element={<Category />} />
+              <Route path="/single" element={<Single />} />
+            </Routes>
         </div>
-      </AppContext.Provider>
+      </BrowserRouter>
     </div>
   );
 }

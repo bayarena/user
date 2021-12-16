@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Main.module.sass';
 
+import { Link } from "react-router-dom";
+
 import img_31 from './3_1.png';
 import img_32 from './3_2.png';
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay } from 'swiper';
 import 'swiper/swiper-bundle.min.css'
-
-import { AppContext } from '../app-context';
 
 import { SETTINGS } from '../settings';
 
@@ -19,7 +19,6 @@ SwiperCore.use([ Autoplay ]);
 function TitleItem(props:any){
   return(
     <div
-      onClick={()=>props.onClick()}
       className={styles.TitleItem}
       style={{
         height: props.height + "px",
@@ -57,8 +56,7 @@ function ClassItem(props:any){
         background: "url('" + props.image + "')",
         backgroundSize: "cover"
       }}
-      className={styles.SmallClassItem}
-      onClick={()=>props.onClick()}>
+      className={styles.SmallClassItem}>
       <div>
         <p style={{background: getDiffColor()}}>{getDiff()}</p>
         <div>
@@ -74,7 +72,6 @@ function MotivatorItem(props:any){
   return(
     <div
       className={styles.SmallMotivatorItem}
-      onClick={()=>props.onClick()}
       style={{
         backgroundImage: "url('" + props.image + "')"
       }}>
@@ -128,8 +125,6 @@ function Main() {
   }, []);
 
   return (
-  <AppContext.Consumer>
-  {({changePage}) => (
     <div className={styles.root}>
         <Swiper
           className={styles.sign}
@@ -144,8 +139,7 @@ function Main() {
                         backgroundImage: "url(" + d['image'] + ")"
                       }}>
                     <span
-                      className={styles.classEnter}
-                      onClick={()=>changePage("LIVE")}>입장하기</span>
+                      className={styles.classEnter}>입장하기</span>
                    </SwiperSlide>)
           })}
         </Swiper>
@@ -171,16 +165,19 @@ function Main() {
               slidesPerView={4}>
 
               <SwiperSlide>
-                <TitleItem
-                  title="최근 클래스"
-                  onClick={()=>changePage('LIVE')}
-                  image="https://d.newsweek.com/en/full/1890945/exercise.jpg"
-                  height={240} />
+                <Link to="/LiveToday">
+                  <TitleItem
+                    title="최근 클래스"
+                    image="https://d.newsweek.com/en/full/1890945/exercise.jpg"
+                    height={240} />
+                </Link>
               </SwiperSlide>
 
               {recentClasses.map((d:any, i:number) => {
                 return(<SwiperSlide>
-                        <ClassItem key={i} onClick={()=>changePage('LIVE')} {...d} />
+                          <Link to="/LiveToday">
+                            <ClassItem key={i} {...d} />
+                          </Link>
                        </SwiperSlide>)
               })}
             </Swiper>
@@ -192,29 +189,30 @@ function Main() {
               slidesPerView={4}>
 
               <SwiperSlide>
-                <TitleItem
-                  title="함께 운동해요"
-                  onClick={()=>changePage('MOTIVATOR')}
-                  image="https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/News/4773-execise_class-1296x728-header.jpg?w=1155&h=1528"
-                  height={150} />
+                <Link to="/motivator">
+                  <TitleItem
+                    title="함께 운동해요"
+                    image="https://i0.wp.com/images-prod.healthline.com/hlcmsresource/images/News/4773-execise_class-1296x728-header.jpg?w=1155&h=1528"
+                    height={150} />
+                </Link>
               </SwiperSlide>
 
               {motivatorList.slice(0,4).map((d:any, i:number) => {
                 return(<SwiperSlide>
-                  <MotivatorItem key={i} onClick={()=>changePage('MOTIVATOR')} {...d} />
+                        <Link to={"/motivator/" + d.id}>
+                          <MotivatorItem key={i} {...d} />
+                        </Link>
                        </SwiperSlide>)
               })}
             </Swiper>
           </div>
 
           <div className={styles.largeMenu}>
-            <img alt="" src={img_31} onClick={()=>changePage('CATEGORY')}/>
-            <img alt="" src={img_32} onClick={()=>changePage('SINGLE')}/>
+            <Link to="/category"><img alt="" src={img_31} /></Link>
+            <Link to="/single"><img alt="" src={img_32} /></Link>
           </div>
         </div>
     </div>
-  )}
-  </AppContext.Consumer>
   );
 }
 

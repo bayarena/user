@@ -15,6 +15,14 @@ export type T_lecture = {
   thumbs: string[],
 };
 
+export type T_category = {
+  id: number,
+
+  title: string,
+  thumb: string,
+  lectures: T_lecture[],
+};
+
 export type T_motivator = {
   id: number,
   

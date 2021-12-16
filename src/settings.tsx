@@ -29,6 +29,7 @@ export type T_motivator = {
   name_kor: string,
   name_eng: string,
   description: string,
+  expertise: string,
   image: string,
   image_thumb: string,
   lectures: T_lecture[],

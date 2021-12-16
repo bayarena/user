@@ -13,6 +13,7 @@ const emptyData:T_motivator = {
   name_kor: "",
   name_eng: "",
   description: "",
+  expertise: "",
   image: "",
   image_thumb: "",
   lectures: [],
@@ -35,16 +36,6 @@ function Item(props:any){
       default : return "#8bc34a";
     }
   }
-
-	const getSubTitle = () => {
-	    let diff = "초급";
-	    switch(props.data.difficulty){
-	      case 1 : diff = "중급"; break;
-	      case 2 : diff = "상급"; break;
-	    }
-
-	    return diff + " | " + props.data.time + "min | " + props.data.theme;
-  	}
 
   	const getDateString = () => {
   		let date = props.data.date.replace('Z', '').split('T');
@@ -107,6 +98,7 @@ function Detail() {
 			<div className={styles.header}>
 				<img src={motivator.image} alt="" />
 				<p>{motivator.name_kor}</p>
+				<p>{motivator.expertise}</p>
 				<p>{motivator.description}</p>
 			</div>
 

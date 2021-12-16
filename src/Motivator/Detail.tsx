@@ -20,11 +20,27 @@ const emptyData:T_motivator = {
 
 function Item(props:any){
 
+  const getDiff = () => {
+    switch(props.data.difficulty){
+      case 1 : return "중급"
+      case 2 : return "상급"
+      default : return "초급"
+    }
+  }
+
+  const getDiffColor = () => {
+    switch(props.data.difficulty){
+      case 1 : return "#2196f3";
+      case 2 : return "#e91e63";
+      default : return "#8bc34a";
+    }
+  }
+
 	const getSubTitle = () => {
 	    let diff = "초급";
 	    switch(props.data.difficulty){
 	      case 1 : diff = "중급"; break;
-	      case 2 : diff = "고급"; break;
+	      case 2 : diff = "상급"; break;
 	    }
 
 	    return diff + " | " + props.data.time + "min | " + props.data.theme;
@@ -61,9 +77,12 @@ function Item(props:any){
 		  	backgroundSize: "cover"
 		  }}>
 		  	<div>
-		  		<p>{props.data.title}</p>
-		  		<p>{getSubTitle()}</p>
-		  		<p>{getDateString()}</p>
+		  		<p style={{background: getDiffColor()}}>{getDiff()}</p>
+		  		<p>{props.data.time + "min | " + props.data.theme}</p>
+		  		<div>
+			  		<p>{props.data.title}</p>
+			  		<p>{getDateString()}</p>
+		  		</div>
 		  	</div>
 		</div>
 	);

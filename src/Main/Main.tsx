@@ -130,7 +130,8 @@ function Main() {
                       style={{
                         backgroundSize: "cover",
                         backgroundImage: "url(" + d['main_image'] + ")"
-                      }}>
+                      }}
+                      className={styles.LargeImage}>
                    </SwiperSlide>)
           })}
         </Swiper>

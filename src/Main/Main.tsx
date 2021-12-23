@@ -61,6 +61,7 @@ function ClassItem(props:any){
         <p style={{background: getDiffColor()}}>{getDiff()}</p>
         <div>
           <img src={props.meta_motivator[0].image_thumb} alt="" />
+          <p>{props.meta_motivator[0].name_kor}</p>
           <p>{props.title}</p>
         </div>
       </div>

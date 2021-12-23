@@ -53,8 +53,8 @@ function Item(props:any){
         <p>{props.subtitle}</p>
         <p>{props.name}</p>
         <div className={styles.itemMotivator}>
-          {props.motivators.map((d:string, i:number)=>{
-            return <img src={SETTINGS.REST_URL + d} alt="" key={i} />
+          {props.motivators.map((d:any, i:number)=>{
+            return <img src={d.image_thumb} alt="" key={i} />
           })}
         </div>
       </div>
@@ -136,7 +136,7 @@ function Live() {
                 title={d.title}
                 subtitle={getSubTitle(d)}
                 image={d.image}
-                motivators={d.thumbs}
+                motivators={d.meta_motivator}
                 time={d.date}
               /> 
             </React.Fragment>

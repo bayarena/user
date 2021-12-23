@@ -40,22 +40,10 @@ function Category() {
   const location = useLocation();
 
   useEffect(()=>{
-    axios.get(SETTINGS.REST_URL + "/category/")
+    axios.get(SETTINGS.REST_URL + "/category/?meta")
       .then((res)=> {
         if(res.status === 200){
-
-          let catList = res.data.results.reduce((acc:any, curr:any, idx:number)=>{
-            let cat = {
-              id: curr.id,
-              title: curr.title,
-              thumb: curr.thumb
-            };
-            acc.push(cat);
-            return acc;
-          }, []);
-
-          setCategoryList(catList);
-
+          setCategoryList(res.data.results);
         }
     });
   }, []);

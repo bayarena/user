@@ -27,7 +27,7 @@ function Main(props:any){
         {props.list.map((d:any, i:number) => {
           return(
             <Link key={i} to={"" + d.id}>
-              <Item name={d.name_eng} src={d.image} />
+              <Item name={d.name_kor} src={d.image} />
             </Link>
             );
         })}
@@ -41,23 +41,10 @@ function Motivator(props:any) {
   const location = useLocation();
 
   useEffect(()=>{
-    axios.get(SETTINGS.REST_URL + "/motivators/")
+    axios.get(SETTINGS.REST_URL + "/motivators/?meta")
       .then((res)=> {
         if(res.status === 200){
-
-          let motList = res.data.results.reduce((acc:any, curr:any, idx:number)=>{
-            let mot = {
-              name_eng: curr.name_eng,
-              name_kor: curr.name_kor,
-              image: curr.image,
-              id: curr.id
-            };
-            acc.push(mot);
-            return acc;
-          }, []);
-
-          setMotivatorList(motList);
-
+          setMotivatorList(res.data.results);
         }
     });
   }, []);

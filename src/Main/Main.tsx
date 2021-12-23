@@ -60,7 +60,7 @@ function ClassItem(props:any){
       <div>
         <p style={{background: getDiffColor()}}>{getDiff()}</p>
         <div>
-          <img src={SETTINGS.REST_URL + props.thumbs[0]} alt="" />
+          <img src={props.meta_motivator[0].image_thumb} alt="" />
           <p>{props.title}</p>
         </div>
       </div>
@@ -95,7 +95,7 @@ function Main() {
   };
 
   const fetchMotivators = () => {
-    axios.get(SETTINGS.REST_URL + '/motivators/')
+    axios.get(SETTINGS.REST_URL + '/motivators/?meta')
       .then((res)=>{
         setMotivatorList(res.data.results);
       });

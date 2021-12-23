@@ -59,8 +59,8 @@ function Item(props:T_lecture){
 		<div className={styles.Item}>
 			{getDateString()}
 			<div>
-				<img src={SETTINGS.REST_URL + props.thumbs[0]} alt="" />
-				<p>이름</p>
+				<img src={props.meta_motivator[0].image_thumb} alt="" />
+				<p>{props.meta_motivator[0].name_kor}</p>
 			</div>
 			<p>{props.title}</p>
 			<p>{getSubTitle()}</p>

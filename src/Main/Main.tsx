@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Main.module.sass';
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import img_31 from './3_1.png';
 import img_32 from './3_2.png';
@@ -88,6 +88,8 @@ function Main() {
   const [recentClasses, setRecentClasses] = useState([]);
   const [motivatorList, setMotivatorList] = useState([]);
 
+  const navigate = useNavigate();
+
   const fetchRecentClasses = () => {
     axios.get(SETTINGS.REST_URL + '/lectures?length=4')
       .then((res)=>{
@@ -103,24 +105,13 @@ function Main() {
   };
 
   useEffect(() => {
-    const fetchClasses = async() => {
-      try{
+    axios.get(SETTINGS.REST_URL + '/lectures/?staged')
+      .then((res) => {
+        if(res.status === 200){
+          setClasses(res.data.results);
+        }
+    });  
 
-        const res = await axios.get(
-          'https://3nv8tb5hag.execute-api.ap-northeast-2.amazonaws.com/items'
-        );
-
-        // Sort by order
-        let obj = res.data.Items;
-        obj = obj.sort(function(a:any,b:any){
-          return a['order'] - b['order'];
-        });
-        setClasses(obj);
-
-      }catch(e){}
-    };
-
-    fetchClasses();
     fetchRecentClasses();
     fetchMotivators();
   }, []);
@@ -135,12 +126,11 @@ function Main() {
           {classes.map((d, i) => {
             return(<SwiperSlide
                       key={i}
+                      onClick={()=>navigate('/LiveToday')}
                       style={{
                         backgroundSize: "cover",
-                        backgroundImage: "url(" + d['image'] + ")"
+                        backgroundImage: "url(" + d['main_image'] + ")"
                       }}>
-                    <span
-                      className={styles.classEnter}>입장하기</span>
                    </SwiperSlide>)
           })}
         </Swiper>

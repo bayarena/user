@@ -123,10 +123,10 @@ function Main() {
           spaceBetween={0}
           slidesPerView={1}
           autoplay={{delay: 2500}}>
-          {classes.map((d, i) => {
+          {classes.map((d:any, i) => {
             return(<SwiperSlide
                       key={i}
-                      onClick={()=>navigate('/LiveToday')}
+                      onClick={()=>navigate('/LiveToday#classElement' + d.id)}
                       style={{
                         backgroundSize: "cover",
                         backgroundImage: "url(" + d['main_image'] + ")"
@@ -166,8 +166,8 @@ function Main() {
               </SwiperSlide>
 
               {recentClasses.map((d:any, i:number) => {
-                return(<SwiperSlide>
-                          <Link to="/LiveToday">
+                return(<SwiperSlide key={i}>
+                          <Link to={"/LiveToday#classElement" + d.id}>
                             <ClassItem key={i} {...d} />
                           </Link>
                        </SwiperSlide>)
@@ -190,7 +190,7 @@ function Main() {
               </SwiperSlide>
 
               {motivatorList.slice(0,4).map((d:any, i:number) => {
-                return(<SwiperSlide>
+                return(<SwiperSlide key={i}>
                         <Link to={"/motivator/" + d.id}>
                           <MotivatorItem key={i} {...d} />
                         </Link>

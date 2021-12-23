@@ -36,10 +36,17 @@
   width: 100%
   overflow-y: auto
 
+@keyframes background-fade
+  40%
+    background: rgba(156, 39, 176, 0.2)
+  100%
+    background: transparent
+
+.highlight
+   animation: background-fade 1.5s forwards
 
 .item
   display:  flex
-
 
 .timeline
   border-right : 2px solid #9d43e3

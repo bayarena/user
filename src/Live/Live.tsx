@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './Live.module.sass';
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import calendar from './calendar.png';
 import setting from './setting.png';
@@ -41,7 +41,7 @@ function Item(props:any){
   };
 
   return(
-    <div className={styles.item}>
+    <div className={styles.item} id={"classElement" + props.id}>
       <div className={styles.timeline}>
         <span>{prettyDateString(props.time)}</span>
         <span>{prettyTimeString(props.time)}</span>
@@ -76,22 +76,28 @@ function Spacer(props:any){
 function Live() {
 
   const [lectureList, setLectureList] = useState<any[]>([]);
-
-  const refreshData = () => {
-   axios.get(SETTINGS.REST_URL + '/lectures/')
-    .then((res) => {
-      if(res.status === 200){
-        let lectureList = res.data.results;
-
-        console.log(lectureList);
-        setLectureList(lectureList);
-      }
-    });   
-  };
+  const location = useLocation();
 
   useEffect(() => {
-    refreshData();
-  }, []);
+    axios.get(SETTINGS.REST_URL + '/lectures/')
+      .then((res) => {
+        if(res.status === 200){
+          let lectureList = res.data.results;
+          setLectureList(lectureList);
+
+          setTimeout(()=>{
+            if(location.hash){
+              let elem = document.getElementById(location.hash.replace("#", ''));
+              if(elem){
+                elem.scrollIntoView();
+                elem.classList.add(styles.highlight);
+              }
+            }
+          },100);
+
+        }
+    });
+  }, [location]);
 
   const prettyDateString = (date:string) => {
     let date_string = date.split('T')[0];
@@ -133,6 +139,7 @@ function Live() {
             <React.Fragment key={i}>
               <Spacer text={getDateText(i)} />
               <Item
+                id={d.id}
                 title={d.title}
                 subtitle={getSubTitle(d)}
                 image={d.image}

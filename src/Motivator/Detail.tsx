@@ -5,7 +5,7 @@ import styles from './Detail.module.sass';
 import { SETTINGS } from '../settings';
 import type { T_motivator, T_lecture } from '../settings';
 
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 const emptyData:T_motivator = {
   id: 0,
@@ -104,7 +104,7 @@ function Detail() {
 
 			<div className={styles.content}>
 				{motivator.lectures.map((d:T_lecture, i:number) => {
-					return <Item data={d} key={i} />
+					return <Link key={i} to={"/LiveToday#classElement" + d.id}><Item data={d} /></Link>
 				})}
 			</div>
 		</div>

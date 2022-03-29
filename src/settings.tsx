@@ -7,6 +7,7 @@ export type T_meta_motivator = {
 export type T_lecture = {
   id: number,
 
+  ticket: string,
   meta_motivator: T_meta_motivator[],
   tag: string,
   title: string
@@ -42,4 +43,5 @@ export type T_motivator = {
 
 export const SETTINGS = {
 	REST_URL: "http://52.79.124.70:7231",
+	//REST_URL: "http://localhost:8000",
 }

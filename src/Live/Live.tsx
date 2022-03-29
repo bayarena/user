@@ -59,7 +59,9 @@ function Item(props:any){
         </div>
       </div>
       <div className={styles.itemButtons}>
-        <p>입장하기</p>
+        <Link to={`/play?${propd.ticket}`}>
+          <p>입장하기</p>
+        </Link>
         <img src={setting} alt="" />
         <img src={calendar} alt="" />
       </div>

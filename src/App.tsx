@@ -13,7 +13,7 @@ import Live from './Live/Live';
 import Motivator from './Motivator/Motivator';
 import Category from './Category/Category';
 import Single from './Single/Single';
-
+import Play from './Play/Play';
 
 function App() {
 
@@ -28,6 +28,7 @@ function App() {
               <Route path="/motivator/*" element={<Motivator />} />
               <Route path="/category/*" element={<Category />} />
               <Route path="/single" element={<Single />} />
+              <Route path="/play" element={<Play />} />
             </Routes>
         </div>
       </BrowserRouter>
